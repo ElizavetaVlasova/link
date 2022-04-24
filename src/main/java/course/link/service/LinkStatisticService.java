@@ -48,8 +48,13 @@ public class LinkStatisticService {
         List<Link> listOfSortedUrls = repository.getListOfSortedUrls();
         List<LinkStatisticResponse> result = new ArrayList<>();
         int skip = (page -1) * limit;
-        for (int i = skip + 1; i <= limit; i++) {
-            result.add(new LinkStatisticResponse(i, listOfSortedUrls.get(i)));
+        int limitCounter = 0;
+            for (int i = skip; i < listOfSortedUrls.size(); i++) {
+                if (limitCounter >= limit) {
+                    break;
+                }
+                result.add(new LinkStatisticResponse(i + 1, listOfSortedUrls.get(i)));
+                limitCounter++;
         }
         return result;
     }

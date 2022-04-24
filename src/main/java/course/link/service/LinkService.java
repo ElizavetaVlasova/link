@@ -65,6 +65,7 @@ public class LinkService {
     public String getOriginalUrl(String shortLink) {
         var optionalLink = repository.findByShortURL(shortLink);
         if (optionalLink.isEmpty()) {
+            logger.error("There is no such link.");
             return null;
         }
         Link link = optionalLink.get();
