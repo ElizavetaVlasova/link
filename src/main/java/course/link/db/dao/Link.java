@@ -5,6 +5,15 @@ import javax.persistence.*;
 @Entity
 @Table(name = "links")
 public class Link {
+    //contructor for tests purposes
+    public Link(String originalUrl, int counter, String shortUrl) {
+        this.originalUrl = originalUrl;
+        this.counter = counter;
+        this.shortUrl = shortUrl;
+    }
+
+    public Link() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

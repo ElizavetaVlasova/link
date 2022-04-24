@@ -25,12 +25,13 @@ public class LinkStatisticService {
         }
 
         List<Link> listOfSortedUrls = repository.getListOfSortedUrls();
+        String shortId = String.join("", "/l/", shortLink);
 
         int rank = 0;
         Link link = null;
         for (int i = 0; i < listOfSortedUrls.size(); i++) {
              Link repositoryLink = listOfSortedUrls.get(i);
-             if (shortLink.equals(repositoryLink.getShortUrl())) {
+             if (shortId.equals(repositoryLink.getShortUrl())) {
                  rank = i;
                  link = repositoryLink;
                  break;
@@ -40,10 +41,9 @@ public class LinkStatisticService {
             logger.error("There is no such link in repository");
             return new LinkStatisticResponse();
         }
-        return new LinkStatisticResponse(rank, link);
+        return new LinkStatisticResponse(rank + 1, link);
     }
 
-    //TODO изменить подход не беря всё из базы данных сразу же, а брать в соответствии с входными данными
     public List<LinkStatisticResponse> getStatisticForAllLinks(int page, int limit) {
         List<Link> listOfSortedUrls = repository.getListOfSortedUrls();
         List<LinkStatisticResponse> result = new ArrayList<>();

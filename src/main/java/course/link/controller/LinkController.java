@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -28,8 +29,8 @@ public class LinkController {
     }
 
     @GetMapping (path = "/l/{shortLink}")
-    public Object redirectToOriginalUrl(@PathVariable ("shortLink") String shortLink) {
-        String link =  linkService.getOriginalUrl(shortLink);
+    public Object redirectToOriginalUrl(HttpServletRequest request) {
+        String link =  linkService.getOriginalUrl(request.getServletPath());
         if (link == null) {
             return "There is no link";
         }

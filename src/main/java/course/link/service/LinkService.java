@@ -25,9 +25,8 @@ public class LinkService {
     LinkGenerator linkGenerator;
 
     public LinkResponse generateShortLink(LinkRequest request) {
-        logger.info("Original url is "+ request.getOriginal());
         if (!requestIsValid(request)) {
-            logger.info("Url is not valid");
+            logger.error("Url is not valid");
             return new LinkResponse();
         }
         Optional<Link> byOriginalUrl = repository.findByOriginalUrl(request.getOriginal());
@@ -36,7 +35,6 @@ public class LinkService {
         }
         String shortUrl = linkGenerator.getRandomValue();
         Link link = createLink(request.getOriginal(), shortUrl);
-        logger.info("Short link is " + shortUrl);
         repository.save(link);
         return new LinkResponse(shortUrl);
     }
